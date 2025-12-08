@@ -1,110 +1,98 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import groupImg from '../assets/group.png';
+import groupImg from "../assets/group.png";
 import {
   FaBoxOpen,
   FaChartBar,
   FaSignOutAlt,
   FaChevronLeft,
   FaChevronRight,
-} from 'react-icons/fa';
+} from "react-icons/fa";
 
-const Sidebar: React.FC = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-
-  // 現在のページ（あとでルーティングと連動させてもOK）
-  const activePage = "売上管理";
-
+const Sidebar = ({ activePage = "売上管理" }) => {
+  const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
 
-  const menuItems = [
-    { label: "部門員権限", icon: null, onClick: () => {} },
-    { label: "商品販売", icon: <FaBoxOpen />, onClick: () => navigate("/sales") },
-    { label: "売上管理", icon: <FaChartBar />, onClick: () => navigate("/manage") },
-  ];
+
+  const navClass = (page: string) =>
+    `px-4 py-2 rounded cursor-pointer transition flex items-center gap-2 text-lg ${
+      activePage === page
+        ? "bg-white text-black font-semibold"
+        : "hover:bg-white hover:text-green-600"
+    }`;
 
   return (
     <div
-      className="
-        relative shadow-md flex flex-col justify-between text-white
-        transition-all duration-300 min-h-screen
-      "
+      className="relative flex flex-col text-white transition-all duration-300 shadow-md"
       style={{
-        backgroundColor: '#3F861E',
-        width: isCollapsed ? '64px' : '360px',
-        padding: isCollapsed ? '0px' : '24px',
+        backgroundColor: "#3F861E",
+        width: collapsed ? "80px" : "360px",
+        height: "100vh",
+        padding: collapsed ? "10px" : "24px",
       }}
     >
-          <button
-  onClick={() => setIsCollapsed(!isCollapsed)}
-  className="
-    absolute top-[69%] -right-7  /* moved more left */
-    -translate-y-1/2 w-16 h-16    /* bigger circle */
-    rounded-full bg-white flex items-center justify-center
-    shadow-lg cursor-pointer z-20 hover:scale-105 transition
-  "
->
-  {isCollapsed ? (
-    <FaChevronRight className="text-[#3F861E] text-3xl" />
-  ) : (
-    <FaChevronLeft className="text-[#3F861E] text-3xl" />
-  )}
-</button>
+      {/* Collapse Button */}
+      <button
+        onClick={() => setCollapsed(!collapsed)}
+        className="absolute bottom-1/4 -right-6 -translate-y-1/2 w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center cursor-pointer hover:scale-105 transition"
+      >
+        {collapsed ? (
+          <FaChevronRight className="text-[#3F861E] text-2xl" />
+        ) : (
+          <FaChevronLeft className="text-[#3F861E] text-2xl" />
+        )}
+      </button>
 
-      {!isCollapsed && (
+      {/* Profile (hidden when collapsed) */}
+      {!collapsed && (
         <>
-          <div>
-            <div className="h-20" />
-
-            <div className="flex items-center gap-4 mb-6">
-              <img
-                src={groupImg}
-                alt="Profile"
-                className="w-20 h-20 rounded-full object-cover border-2 border-white shadow-sm"
-              />
-              <div className="flex flex-col">
-                <div className="text-2xl font-bold">富岡 栄莉英</div>
-                <div className="text-sm text-green-100">管理者</div>
-              </div>
+          <div className="h-10" />
+          <div className="flex items-center gap-4 mb-8">
+            <img
+              src={groupImg}
+              alt="Profile"
+              className="w-20 h-20 rounded-full object-cover border-2 border-white shadow-sm"
+            />
+            <div>
+              <div className="text-2xl font-bold">富岡 栄莉英</div>
+              <div className="text-sm text-green-100">管理者</div>
             </div>
-
-            <nav className="space-y-2 text-sm text-green-100">
-              {menuItems.map(
-                (item) => {
-                const isActive = item.label === activePage;
-                return (
-                  <div
-                    key={item.label}
-                    onClick={item.onClick}
-                    className={`
-                      px-4 py-2 rounded cursor-pointer flex items-center gap-2 text-lg transition
-                      ${
-                        isActive
-                          ? "bg-white text-black font-semibold"
-                          : "hover:bg-white hover:text-green-600"
-                      }
-                    `}
-                  >
-                    {item.icon && <span className="text-base">{item.icon}</span>}
-                    <span>{item.label}</span>
-                  </div>
-                );
-              })}
-            </nav>
           </div>
-
-          <button
-            className="
-              w-full flex items-center justify-center gap-3
-              bg-[#E6492D] text-white py-4 rounded-md text-lg font-semibold
-              shadow-md hover:bg-[#cc3d25] transition mt-6
-            "
-          >
-            <FaSignOutAlt className="text-2xl" />
-            <span>ログアウト</span>
-          </button>
         </>
       )}
+
+      {/* Navigation */}
+      <nav className={`space-y-4 ${collapsed ? "mt-16" : "mt-2"}`}>
+        {!collapsed ? (
+          <>
+            <div className={navClass("部門員権限")}>部門員権限</div>
+            <div className={navClass("商品販売")}>
+              <FaBoxOpen className="text-base" />
+              <span>商品販売</span>
+            </div>
+            <div className={navClass("売上管理")}>
+              <FaChartBar className="text-base" />
+              <span>売上管理</span>
+            </div>
+          </>
+        ) : (
+          <>
+            <FaBoxOpen className="text-3xl mx-auto cursor-pointer hover:text-gray-200" />
+            <FaChartBar className="text-3xl mx-auto cursor-pointer hover:text-gray-200" />
+          </>
+        )}
+      </nav>
+
+      {/* LOGOUT AT BOTTOM ALWAYS */}
+      <div className="mt-auto pb-6">
+        <button
+          onClick={() => navigate("/login")}
+          className="w-full flex items-center justify-center gap-2 bg-red-500 text-white px-4 py-3 rounded hover:bg-red-600 transition"
+        >
+          <FaSignOutAlt className="text-xl" />
+          {!collapsed && <span>ログアウト</span>}
+        </button>
+      </div>
     </div>
   );
 };

@@ -1,0 +1,29 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Product {
+  id      Int     @id @default(autoincrement())
+  name    String
+  price   Int
+  sold    Int     @default(0)
+
+  // 🔹 1対多の関係（Product 1 : 多 Transaction）
+  transactions Transaction[]
+}
+
+model Transaction {
+  id         Int      @id @default(autoincrement())
+  productId  Int
+  quantity   Int
+  total      Int
+  createdAt  DateTime @default(now())
+
+  // 🔹 ここで Product と紐づける
+  product    Product  @relation(fields: [productId], references: [id])
+}
