@@ -1,6 +1,6 @@
 function Contents({ title, subTitle, price }: { title: string; subTitle: string; price: string }) {
     const handleClick = () => {
-        alert('bought an item A');
+        alert('Item was purchased');
     };
     return (
         <div>
