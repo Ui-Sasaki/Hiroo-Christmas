@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import groupImg from "../assets/group.png";
+import groupImg from "../assets/Group.png";
 import {
   FaBoxOpen,
   FaChartBar,
