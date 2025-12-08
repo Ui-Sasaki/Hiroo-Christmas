@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './Home.tsx';
+import Home from './App.tsx';
 import Sales from './pages/sales/Sales';
 import './index.css';
 
