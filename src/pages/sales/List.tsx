@@ -1,25 +1,48 @@
-function List({ title, numbers, price }: { title: string; numbers: number; price: string }) {
-    const handleClickAdd = () => {
-        alert('1 item was added');
-    };
-    const handleClickSubtract = () => {
-        alert('1 item was subtracted');
-    };
-    return (
-        <div className="relative h-[50px]">
-            <div className="absolute inset-y-0 left-8 flex items-center">
-                <h1>{title}</h1>
-            </div>
-            <div className="absolute inset-0 flex items-center justify-center gap-1">
-                <button className="items-center mx-2 bg-red-600 rounded-full w-6 text-white" onClick={handleClickSubtract}>-</button>
-                <h1>{numbers}</h1>
-                <button className="items-center mx-2 bg-green-600 rounded-full w-6 text-white" onClick={handleClickAdd}>+</button>
-            </div>
-            <div className="absolute inset-y-0 right-8 flex items-center">
-                <h1>{price}</h1>
-            </div>
-        </div>
-    );
-}
+// src/pages/sales/List.tsx
+import React from "react";
+
+type ListProps = {
+  title: string;
+  numbers: number;
+  price: number | string;
+  onChange: (nextQty: number) => void;
+};
+
+const List: React.FC<ListProps> = ({ title, numbers, price, onChange }) => {
+  const handleMinus = () => {
+    if (numbers <= 0) return;
+    onChange(numbers - 1);
+  };
+
+  const handlePlus = () => {
+    onChange(numbers + 1);
+  };
+
+  return (
+    <div className="flex items-center justify-between px-4 py-2">
+      <div className="flex-1 mr-2 truncate">{title}</div>
+
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={handleMinus}
+          className="w-7 h-7 rounded-full bg-red-500 text-white flex items-center justify-center"
+        >
+          −
+        </button>
+        <span className="w-6 text-center">{numbers}</span>
+        <button
+          type="button"
+          onClick={handlePlus}
+          className="w-7 h-7 rounded-full bg-green-500 text-white flex items-center justify-center"
+        >
+          ＋
+        </button>
+      </div>
+
+      <div className="w-16 text-right">{price}円</div>
+    </div>
+  );
+};
 
 export default List;

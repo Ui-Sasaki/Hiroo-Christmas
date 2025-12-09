@@ -1,50 +1,79 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Sidebar from './components/Sidebar';
-import Header from './components/Header';
-import TransactionTable from './components/TransactionTable';
-import Buttons from './components/Buttons';
-import LoginPage from './pages/LoginPage'; // 👈 Make sure this file exists
+// src/App.tsx
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 
-const App = () => {
-     return (
-          <Router>
-               <Routes>
-                    {/* Login page (no sidebar/header) */}
-                    <Route path="/login" element={<LoginPage />} />
+import Sidebar from "./components/Sidebar";
+import Header from "./components/Header";
+import TransactionTable from "./components/TransactionTable";
+import LoginPage from "./pages/LoginPage";
+import Sales from "./pages/sales/Sales";
+import Analytics from "./pages/admin/Analytics";
 
-                    {/* Main layout */}
-                    <Route
-                         path="/"
-                         element={
-                              <div className="flex h-screen" style={{ backgroundColor: '#E3EDF9' }}>
-                                   <Sidebar />
-                                   <div className="flex-1 overflow-y-auto">
-                                        {/* Header section */}
-                                        <div className="bg-white px-6 py-3 shadow">
-                                             <Header />
-                                        </div>
+// 売上管理レイアウト
+const DashboardLayout: React.FC = () => {
+  return (
+    <div className="flex h-screen" style={{ backgroundColor: "#E3EDF9" }}>
+      <Sidebar activePage="売上管理" />
 
-                                        {/* Spacer between header and buttons */}
-                                        <div style={{ height: '3rem', backgroundColor: '#E3EDF9' }} />
+      <div className="flex-1 overflow-y-auto">
+        {/* 上のヘッダー */}
+        <div className="bg-white px-6 py-3 shadow">
+          <Header title="売上管理" />
+        </div>
 
-                                        {/* Buttons section */}
-                                        <div style={{ backgroundColor: '#E3EDF9' }} className="px-6 py-4">
-                                             <Buttons />
-                                        </div>
+        {/* 中身 */}
+        <div className="p-6">
+          <TransactionTable />
+        </div>
+      </div>
+    </div>
+  );
+};
 
-                                        {/* Main content area */}
-                                        <div className="p-6">
-                                             <div className="bg-white p-4 rounded shadow">
-                                                  <TransactionTable />
-                                             </div>
-                                        </div>
-                                   </div>
-                              </div>
-                         }
-                    />
-               </Routes>
-          </Router>
-     );
+// 商品販売レイアウト
+const SalesLayout: React.FC = () => {
+  return (
+    <div className="flex h-screen" style={{ backgroundColor: "#E3EDF9" }}>
+      <Sidebar activePage="商品販売" />
+
+      <div className="flex-1 overflow-y-auto">
+        <div className="bg-white px-6 py-3 shadow">
+          <Header title="商品販売" />
+        </div>
+
+        <div className="p-6">
+          <Sales />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const AdminAnalyticsLayout: React.FC = () => {
+  return (
+    <div className="flex h-screen" style={{ backgroundColor: "#E3EDF9" }}>
+      <Sidebar activePage="統計・分析" />
+      <div className="flex-1 overflow-y-auto">
+        <div className="bg-white px-6 py-3 shadow">
+          <Header title="統計・分析" />
+        </div>
+        <div className="p-6">
+          <Analytics />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/" element={<DashboardLayout />} />
+      <Route path="/sales" element={<SalesLayout />} />
+      <Route path="/analytics" element={<AdminAnalyticsLayout />} />
+    </Routes>
+  );
 };
 
 export default App;

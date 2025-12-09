@@ -1,3 +1,5 @@
+// backend/prisma/schema.prisma
+
 datasource db {
   provider = "sqlite"
   url      = "file:./dev.db"
@@ -8,22 +10,37 @@ generator client {
 }
 
 model Product {
-  id      Int     @id @default(autoincrement())
-  name    String
-  price   Int
-  sold    Int     @default(0)
+  id       Int               @id @default(autoincrement())
+  name     String
+  price    Int
+  sold     Int               @default(0)
 
-  // 🔹 1対多の関係（Product 1 : 多 Transaction）
-  transactions Transaction[]
+  items    TransactionItem[]
 }
 
 model Transaction {
-  id         Int      @id @default(autoincrement())
-  productId  Int
-  quantity   Int
-  total      Int
-  createdAt  DateTime @default(now())
+  id        Int               @id @default(autoincrement())
+  createdAt DateTime          @default(now())
+  total     Int
 
-  // 🔹 ここで Product と紐づける
-  product    Product  @relation(fields: [productId], references: [id])
+  items     TransactionItem[]
+}
+
+model TransactionItem {
+  id            Int          @id @default(autoincrement())
+  transaction   Transaction  @relation(fields: [transactionId], references: [id])
+  transactionId Int
+
+  product       Product      @relation(fields: [productId], references: [id])
+  productId     Int
+
+  quantity      Int
+  subtotal      Int
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+  role     String @default("staff")
 }

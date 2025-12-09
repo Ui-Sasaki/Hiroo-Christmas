@@ -1,11 +1,9 @@
-const Header2 = () => {
-     return (
-          <div className="flex items-center justify-center h-10">
-               <h1 className="text-3xl font-bold text-green-600">
-                    商品販売
-               </h1>
-          </div>
-     );
-};
+const Header2 = ({ title }: { title: string }) => {
+  return (
+    <h1 className="text-3xl font-bold text-center text-[#2D6A4F] tracking-wide">
+      {title}
+    </h1>
+  );
+}
 
 export default Header2;

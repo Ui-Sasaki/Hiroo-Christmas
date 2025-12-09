@@ -1,16 +1,31 @@
-function Contents({ title, subTitle, price }: { title: string; subTitle: string; price: string }) {
-    const handleClick = () => {
-        alert('Item was purchased');
-    };
-    return (
-        <div>
-            <button className="w-[130px] h-[130px] p-4 bg-white m-2 rounded shadow-md" onClick={handleClick}>
-                <h2 className="text-left text-sm text-gray-500">{subTitle}</h2>
-                <h1 className="text-left text-2xl text-black">{title}</h1>
-                <p className="text-left text-green-700">{price}円</p>
-            </button>
-        </div>
-    );
-}
+// src/pages/sales/Contents.tsx
+import React from "react";
+
+type ContentsProps = {
+  title: string;
+  subTitle: string;
+  price: number | string;
+  onClick?: () => void;
+};
+
+const Contents: React.FC<ContentsProps> = ({
+  title,
+  subTitle,
+  price,
+  onClick,
+}) => {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="w-[230px] h-[150px] bg-white rounded shadow-md px-6 py-4 text-left
+                 hover:shadow-lg hover:-translate-y-1 transition cursor-pointer"
+    >
+      <p className="text-sm text-gray-500 mb-1">{subTitle}</p>
+      <p className="text-2xl font-semibold mb-2 break-words">{title}</p>
+      <p className="text-green-600 font-semibold">{price}円</p>
+    </button>
+  );
+};
 
 export default Contents;
