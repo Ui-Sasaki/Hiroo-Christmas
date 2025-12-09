@@ -70,7 +70,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activePage = "売上管理" }) => {
                 className="w-20 h-20 rounded-full object-cover border-2 border-white shadow-sm"
               />
               <div>
-                <div className="text-2xl font-bold">富岡 栄莉英</div>
+                <div className="text-2xl font-bold">広尾-技術</div>
                 <div className="text-sm text-green-100">
                   {userRole === "admin" ? "技術部門" : "スタッフ"}
                 </div>
