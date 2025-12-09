@@ -1,10 +1,14 @@
+// src/components/LoginForm.tsx
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,11 +25,17 @@ const LoginForm: React.FC = () => {
       });
 
       if (res.ok) {
-        // ログイン成功
         const data = await res.json();
         console.log("LOGIN OK:", data);
-        // ひとまずトップ画面へ遷移
-        window.location.href = "/";
+
+        // ロール & メール保存（サイドバーとかで使う用）
+        if (data.user) {
+          localStorage.setItem("userRole", data.user.role ?? "staff");
+          localStorage.setItem("userEmail", data.user.email ?? email);
+        }
+
+        // ★ ここで React Router で "/" に飛ぶ
+        navigate("/");
       } else if (res.status === 401) {
         setError("E-mail またはパスワードが違います。");
       } else {
@@ -50,7 +60,6 @@ const LoginForm: React.FC = () => {
         </div>
       )}
 
-      {/* Email Field */}
       <label className="block text-sm font-semibold text-green-700 mb-1">
         E-mail Address
       </label>
@@ -62,7 +71,6 @@ const LoginForm: React.FC = () => {
         onChange={(e) => setEmail(e.target.value)}
       />
 
-      {/* Password Field */}
       <label className="block text-sm font-semibold text-green-700 mb-1">
         Password
       </label>
@@ -74,7 +82,6 @@ const LoginForm: React.FC = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      {/* Sign In Button */}
       <button
         type="submit"
         className="w-full bg-green-700 text-white rounded px-4 py-3 text-lg hover:bg-green-800 transition disabled:opacity-60"
@@ -83,7 +90,6 @@ const LoginForm: React.FC = () => {
         {loading ? "サインイン中..." : "サインイン"}
       </button>
 
-      {/* Help Text */}
       <p className="text-xs text-gray-500 mt-4">
         パスワードを忘れた場合は広報部門までご連絡ください。
       </p>
