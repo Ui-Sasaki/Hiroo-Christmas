@@ -1,22 +1,20 @@
+// backend/app/analytics/page.tsx
 "use client";
 
 import React from "react";
 import Sidebar from "../../frontend/components/Sidebar";
-import Header from "../../frontend/components/Header";
-import Analytics from "../../frontend/pages/admin/Analytics"; // adjust if path differs
+import Analytics from "../../frontend/pages/admin/Analytics";
 
-export default function AnalyticsRoute() {
+export default function AnalyticsPage() {
   return (
-    <div className="flex h-screen bg-[#E3EDF9]">
+    <div className="flex h-screen">
+      {/* ✅ ここだけサイドバー */}
       <Sidebar activePage="統計・分析" />
-      <div className="flex-1 overflow-y-auto">
-        <div className="bg-white px-6 py-3 shadow">
-          <Header title="統計・分析" />
-        </div>
-        <div className="p-6">
-          <Analytics />
-        </div>
-      </div>
+
+      {/* ✅ 中身はさっきのシンプルな Analytics だけ */}
+      <main className="flex-1 overflow-y-auto">
+        <Analytics />
+      </main>
     </div>
   );
 }

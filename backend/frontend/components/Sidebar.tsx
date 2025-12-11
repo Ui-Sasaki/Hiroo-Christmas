@@ -1,4 +1,4 @@
-// backend/frontend/components/Sidebar.tsx
+
 "use client";
 
 import React, { useState, useEffect } from "react";
