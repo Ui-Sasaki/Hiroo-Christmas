@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-// src/pages/admin/Analytics.tsx
-=======
 // backend/frontend/pages/admin/Analytics.tsx
 "use client";
 
->>>>>>> aa5aeba (Fix)
 import React, { useEffect, useMemo, useState } from "react";
 import {
   Chart as ChartJS,
@@ -52,10 +48,6 @@ const Analytics: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-<<<<<<< HEAD
-  // ロール（"admin" だけ本気の情報を見られる）
-  const userRole = localStorage.getItem("userRole") || "staff";
-=======
   // ---- ここで userRole を「ブラウザだけ」で読む ----
   const [userRole, setUserRole] = useState<"admin" | "staff" | null>(null);
 
@@ -81,7 +73,6 @@ const Analytics: React.FC = () => {
   }
 
   // ---- ここから下は元のロジックそのまま ----
->>>>>>> aa5aeba (Fix)
 
   useEffect(() => {
     const fetchTx = async () => {
@@ -159,10 +150,6 @@ const Analytics: React.FC = () => {
 
   // ===== ③ 12:30〜17:00 の時間帯カーブ用データ =====
   const { hourLabels, hourQuantities } = useMemo(() => {
-<<<<<<< HEAD
-    // 12:30〜17:00 → 12:30〜13:29, ... の5つのバケツ
-=======
->>>>>>> aa5aeba (Fix)
     const labels = [
       "12:30〜13:29",
       "13:30〜14:29",
@@ -226,11 +213,6 @@ const Analytics: React.FC = () => {
   // ===== ④ UI =====
   return (
     <div className="p-10">
-<<<<<<< HEAD
-
-      {/* ローディング & エラー */}
-=======
->>>>>>> aa5aeba (Fix)
       {loading && (
         <div className="bg-white rounded-lg shadow p-10 text-center text-gray-500">
           読み込み中…
@@ -243,20 +225,12 @@ const Analytics: React.FC = () => {
         </div>
       )}
 
-<<<<<<< HEAD
-      {/* データが無いとき */}
-=======
->>>>>>> aa5aeba (Fix)
       {!loading && !error && transactions.length === 0 && (
         <div className="bg-white rounded-lg shadow p-10 text-center text-gray-400">
           まだ決済データがありません。
         </div>
       )}
 
-<<<<<<< HEAD
-      {/* データがあるとき */}
-=======
->>>>>>> aa5aeba (Fix)
       {!loading && !error && transactions.length > 0 && (
         <>
           {/* 上の3つのサマリーカード */}
